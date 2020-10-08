@@ -1,0 +1,22 @@
+.videoBlock {
+    .video__wrapper {
+        background-color: black;
+        position: relative;
+        padding-bottom: 56.25%;
+        height: 0;
+        margin-bottom: 10px;
+    }
+
+    video {
+        position: absolute;
+        background-size: cover;
+        width: 100%;
+        height: 100%;
+    }
+
+    .videoBlock__title {
+        font-size: 18px;
+        font-weight: 300;
+        margin-bottom: 10px;
+    }
+}
