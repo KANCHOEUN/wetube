@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
       ref: "Comment",
     },
   ],
-  Videos: [
+  videos: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Video",
