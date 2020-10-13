@@ -8,7 +8,7 @@
         border: none;
         width: 100%;
         max-width: 280px;
-        padding-top: 8px;
+        padding-top: 9px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -20,17 +20,19 @@
 
         span {
             margin-right: 10px;
-            font-size: 20px;
+            font-size: 18px;
         }
+    }
+
+    a {
+        color: white;
     }
 
     .social-login--github {
         background-color: $black;
-        color: white;
     }
 
     .social-login--facebook {
         background-color: #3a5998;
-        color: white;
     }
 }
