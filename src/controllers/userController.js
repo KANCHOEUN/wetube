@@ -102,14 +102,18 @@ export const logout = (req, res) => {
 export const users = (req, res) => res.render("user", { pageTitle: "User" });
 
 export const getMe = async (req, res) => {
-  console.log(req.user);
-  // const {
-  //   user: { id },
-  // } = req;
-  const user = await User.findById(req.user._id).populate("videos");
-  console.log(user);
-  console.log(await User.find());
-  res.render("userDetail", { pageTitle: "User Detail", user: user });
+  try {
+    const user = await User.findById(req.user._id).populate("videos");
+    // console.log(user);
+    // console.log(typeof user.id);
+    // console.log(typeof user._id);
+    // console.log(typeof res.locals.loggedUser.id);
+    // console.log(typeof res.locals.loggedUser._id);
+    res.render("userDetail", { pageTitle: "User Detail", user });
+  } catch (error) {
+    console.log(error);
+    res.redirect(routes.home);
+  }
 };
 
 export const userDetail = async (req, res) => {

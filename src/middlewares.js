@@ -28,6 +28,7 @@ export const localMiddlewares = (req, res, next) => {
   res.locals.siteName = "WeTube";
   res.locals.routes = routes;
   res.locals.loggedUser = req.user || null;
+  // console.log(res.locals);
   next();
 };
 
@@ -35,12 +36,14 @@ export const onlyPublic = (req, res, next) => {
   if (req.user) {
     res.redirect(routes.home);
   } else {
+    console.log("User For Public");
     next();
   }
 };
 
 export const onlyPrivate = (req, res, next) => {
   if (req.user) {
+    console.log("User For Private");
     next();
   } else {
     res.redirect(routes.home);
