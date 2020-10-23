@@ -106,6 +106,7 @@ export const getMe = async (req, res) => {
     user: { id },
   } = req;
   const user = await User.findById(id).populate("videos");
+  console.log(user);
   res.render("userDetail", { pageTitle: "User Detail", user: user });
 };
 
