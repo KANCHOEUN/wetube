@@ -3,7 +3,6 @@ import routes from "../routes";
 import User from "../models/User";
 
 export const getJoin = async (req, res) => {
-  console.log(process.env);
   res.render("join", { pageTitle: "Join" });
 };
 export const postJoin = async (req, res, next) => {
