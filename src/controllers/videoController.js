@@ -1,6 +1,7 @@
 import routes from "../routes";
 import Video from "../models/Video";
 import Comment from "../models/Comment";
+import User from "../models/User";
 
 export const home = async (req, res) => {
   try {
@@ -39,10 +40,12 @@ export const postUpload = async (req, res) => {
     fileUrl: location,
     title,
     description,
-    creator: req.user.id,
+    creator: req.user._id,
   });
-  req.user.videos.push(newVideo.id);
-  req.user.save();
+  const user = await User.findById(req.user._id);
+  user.videos.push(newVideo.id);
+  user.save();
+  console.log(newVideo);
   res.redirect(routes.videoDetail(newVideo.id));
 };
 
@@ -138,9 +141,9 @@ export const postAddComment = async (req, res) => {
     const video = await Video.findById(id);
     const newComment = await Comment.create({
       text: comment,
-      creator: user.id,
+      creator: user._id,
     });
-    video.comments.push(newComment.id);
+    video.comments.push(newComment._id);
     await video.save();
     res.json(newComment);
   } catch (error) {
@@ -158,8 +161,8 @@ export const deleteComment = async (req, res) => {
   } = req;
   try {
     const comment = await Comment.findById(id);
-    if (comment.creator.toString() !== user.id) {
-      throw Error();
+    if (comment.creator.toString() !== user._id.toString()) {
+      throw Error("cannot delete other users comment");
     } else {
       await Comment.findOneAndRemove({ _id: id });
     }

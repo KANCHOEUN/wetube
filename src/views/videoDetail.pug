@@ -7,7 +7,7 @@ block content
             src:video.fileUrl
         })
         .video__info
-            if loggedUser && video.creator.id === loggedUser.id
+            if loggedUser && video.creator._id.toString() === loggedUser._id.toString()
                 a(href=routes.editVideo(video.id))
                     button Edit Video
             h5.video__title=video.title
@@ -35,7 +35,7 @@ block content
                 each comment in video.comments.reverse()
                     li
                         span.text__comment=comment.text
-                        if loggedUser && comment.creator.toString() === loggedUser.id
+                        if loggedUser && comment.creator.toString() === loggedUser._id.toString()
                             span.delete__comment
                                 a(href=routes.deleteComment(comment._id))
                                     button ❌
