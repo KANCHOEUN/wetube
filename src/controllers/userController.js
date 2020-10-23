@@ -102,6 +102,7 @@ export const logout = (req, res) => {
 export const users = (req, res) => res.render("user", { pageTitle: "User" });
 
 export const getMe = async (req, res) => {
+  console.log(req.user);
   const {
     user: { id },
   } = req;
