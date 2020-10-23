@@ -103,10 +103,10 @@ export const users = (req, res) => res.render("user", { pageTitle: "User" });
 
 export const getMe = async (req, res) => {
   console.log(req.user);
-  const {
-    user: { id },
-  } = req;
-  const user = await User.findById(id).populate("videos");
+  // const {
+  //   user: { id },
+  // } = req;
+  const user = await User.findById(req.user._id).populate("videos");
   console.log(user);
   console.log(await User.find());
   res.render("userDetail", { pageTitle: "User Detail", user: user });
