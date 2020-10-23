@@ -46,7 +46,12 @@ button {
     color: white;
 }
 
+.form-container__link {
+    width: 280px;
+}
 .delete {
+    width: 100%;
+    padding: 10px;
     background-color: $dark-red;
 }
 
