@@ -30,8 +30,12 @@ block content
                     span#jsCommentNumber=video.comments.length
                     |  comments
             form.add__comment#jsAddComment
-                input(type="text", placeholder="Add a Commet")
+                input(type="text", placeholder="Add a Comment")
             ul.video__comments-list#jsCommentList
-                each comment in video.comments.reverse
+                each comment in video.comments.reverse()
                     li
-                        span=comment.text
+                        span.text__comment=comment.text
+                        if loggedUser && comment.creator.toString() === loggedUser.id
+                            span.delete__comment
+                                a(href=routes.deleteComment(comment._id))
+                                    button ❌

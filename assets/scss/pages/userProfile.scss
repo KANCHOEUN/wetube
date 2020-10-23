@@ -18,8 +18,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      a:not(:last-child) {
-        margin-bottom: 20px;
-      }
+    }
+    a {
+      margin-bottom: 20px;
+    }
+    .user-profile__btns:nth-child(2) {
+      margin-bottom: 5px;
     }
   }

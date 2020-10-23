@@ -54,13 +54,34 @@
             }
         }
         .video__comments-list {
+            max-width: 800px;
             margin-top: 50px;
             li {
-                background-color: #3498db;
-                color: white;
-                padding: 15px;
-                border-radius: 20px;
-                border-bottom-left-radius: 0px;
+                display: inline-flex;
+                max-width: 800px;
+                .text__comment {
+                    background-color: #3498db;
+                    color: white;
+                    width: 600px;
+                    padding: 15px;
+                    border-radius: 20px;
+                    border-bottom-left-radius: 0px;
+                    display: inline-block;
+                    word-wrap: break-word;
+                }
+                .delete__comment {
+                    margin-left: 10px;
+                    button {
+                        background-color:#3498db;
+                        border-radius: 5px;
+                        text-align: center;
+                        line-height: 15px;
+                        font-size: 6px;
+                        width: 30px;
+                        height: 30px;
+                        padding: 6px;
+                    }
+                }
                 &:not(:last-child) {
                     margin-bottom: 15px;
                 }

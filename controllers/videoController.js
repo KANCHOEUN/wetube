@@ -33,10 +33,10 @@ export const getUpload = (req, res) => {
 export const postUpload = async (req, res) => {
   const {
     body: { title, description },
-    file: { path },
+    file: { location },
   } = req;
   const newVideo = await Video.create({
-    fileUrl: path,
+    fileUrl: location,
     title,
     description,
     creator: req.user.id,
@@ -66,12 +66,13 @@ export const getEditVideo = async (req, res) => {
   } = req;
   try {
     const video = await Video.findById(id);
-    if (video.creator !== req.user.id) {
+    if (video.creator.toString() !== req.user.id) {
       throw Error();
     } else {
       res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
     }
   } catch (error) {
+    console.error(error);
     res.redirect(routes.home);
   }
 };
@@ -95,9 +96,12 @@ export const deleteVideo = async (req, res) => {
   } = req;
   try {
     const video = await Video.findById(id);
-    if (video.creator !== req.user.id) {
+    if (video.creator.toString() !== req.user.id) {
       throw Error();
     } else {
+      await video.comments.forEach(async (comment) => {
+        await Comment.findOneAndRemove({ _id: comment.id });
+      });
       await Video.findOneAndRemove({ _id: id });
     }
   } catch (error) {
@@ -137,8 +141,30 @@ export const postAddComment = async (req, res) => {
       creator: user.id,
     });
     video.comments.push(newComment.id);
-    video.save();
+    await video.save();
+    res.json(newComment);
   } catch (error) {
+    res.status(400);
+  } finally {
+    res.end();
+  }
+};
+
+// Delete Comment
+export const deleteComment = async (req, res) => {
+  const {
+    params: { id },
+    user,
+  } = req;
+  try {
+    const comment = await Comment.findById(id);
+    if (comment.creator.toString() !== user.id) {
+      throw Error();
+    } else {
+      await Comment.findOneAndRemove({ _id: id });
+    }
+  } catch (error) {
+    console.log(error);
     res.status(400);
   } finally {
     res.end();

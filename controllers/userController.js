@@ -41,7 +41,6 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: { id, avatar_url: avatarUrl, name, email },
   } = profile;
-  console.log(avatarUrl);
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -102,8 +101,12 @@ export const logout = (req, res) => {
 
 export const users = (req, res) => res.render("user", { pageTitle: "User" });
 
-export const getMe = (req, res) => {
-  res.render("userDetail", { pageTitle: "User Detail", user: req.user });
+export const getMe = async (req, res) => {
+  const {
+    user: { id },
+  } = req;
+  const user = await User.findById(id).populate("videos");
+  res.render("userDetail", { pageTitle: "User Detail", user: user });
 };
 
 export const userDetail = async (req, res) => {
@@ -128,10 +131,10 @@ export const postEditProfile = async (req, res) => {
     file,
   } = req;
   try {
-    const user = await User.findByIdAndUpdate(req.user.id, {
+    await User.findByIdAndUpdate(req.user.id, {
       name,
       email,
-      avatarUrl: file ? file.path : req.user.avatarUrl,
+      avatarUrl: file ? file.location : req.user.avatarUrl,
     });
     res.redirect(routes.me);
   } catch (error) {
